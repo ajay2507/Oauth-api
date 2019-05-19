@@ -1,0 +1,18 @@
+{
+  "name": "oauth-ebay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ajaykumar Prathap",
+  "license": "ISC",
+  "dependencies": {
+    "0x": "^4.8.2",
+    "general-oauth2": "^1.4.3",
+    "global": "^4.3.2",
+    "passport": "^0.4.0",
+    "request": "^2.88.0"
+  }
+}
