@@ -9,7 +9,7 @@ const SANDBOX_ENV = "SANDBOX";
 class EbayOauthToken {
     constructor(options) {
         if (!options || !options.clientId || !options.clientSecret) {
-            throw new Error('Invalid options');
+            throw new Error('Invalid options or input');
         }
         if (!options.env) this.env = PROD_ENV;
         this.clientId = options.clientId;
@@ -18,8 +18,11 @@ class EbayOauthToken {
         if (options.env === SANDBOX_ENV) {
             this.baseUrl = consts.SANDBOX_BASE_URL;
         }
-        if (!options.grantType) this.grantType = consts.DEFAULT_GRANT_TYPE;
-        if (!options.scope) this.scope = consts.DEFAULT_SCOPE;
+        if (options.hostname) {
+            this.baseUrl = options.hostname;
+        }
+        this.grantType = (!options.grantType) ? consts.DEFAULT_GRANT_TYPE : options.grantType;
+        this.scope = (!options.scope) ? consts.DEFAULT_SCOPE : options.scope;
     }
 
     getAccessToken() {
