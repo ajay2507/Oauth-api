@@ -45,6 +45,10 @@ class EbayOauthToken {
                 response.setEncoding('utf8');
                 response.on('data', (chunk) => body += chunk);
                 response.on('end', () => {
+                    body = JSON.parse(body);
+                    if (body.error) {
+                        reject(body);
+                    }
                     resolve(body);
                 })
             });

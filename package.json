@@ -1,21 +1,19 @@
 {
   "name": "oauth-ebay",
   "version": "1.0.0",
-  "description": "",
+  "description": "Get oauth2 token for ebay developer application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Ajaykumar Prathap",
   "license": "ISC",
   "dependencies": {
-    "0x": "^4.8.2",
+    "querystring": "^0.2.0"
+  },
+  "devDependencies": {
     "chai": "^4.2.0",
-    "general-oauth2": "^1.4.3",
-    "global": "^4.3.2",
-    "nock": "^10.0.6",
-    "passport": "^0.4.0",
-    "querystring": "^0.2.0",
-    "request": "^2.88.0"
+    "mocha": "^6.1.4",
+    "nock": "^10.0.6"
   }
 }
