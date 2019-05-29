@@ -3,15 +3,15 @@
 const https = require('https');
 const consts = require('./constants');
 const queryString = require('querystring');
-const PROD_ENV = "PROD";
-const SANDBOX_ENV = "SANDBOX";
+const PROD_ENV = 'PROD';
+const SANDBOX_ENV = 'SANDBOX';
 
 class EbayOauthToken {
     constructor(options) {
         if (!options || !options.clientId || !options.clientSecret) {
             throw new Error('Invalid options or input');
         }
-        if (!options.env) this.env = PROD_ENV;
+        if (!options.env) { this.env = PROD_ENV; };
         this.clientId = options.clientId;
         this.clientSecret = options.clientSecret;
         this.baseUrl = consts.PROD_BASE_URL;
@@ -26,8 +26,8 @@ class EbayOauthToken {
     }
 
     getAccessToken() {
-        const encodedStr = base64Encode(this.clientId + ":" + this.clientSecret);
-        const auth = "Basic " + encodedStr;
+        const encodedStr = base64Encode(this.clientId + ':' + this.clientSecret);
+        const auth = 'Basic ' + encodedStr;
         const data = queryString.stringify({
             grant_type: this.grantType,
             scope: this.scope
@@ -35,9 +35,9 @@ class EbayOauthToken {
         return new Promise((resolve, reject) => {
             const request = https.request({
                 headers: {
-                    "Content-Length": data.length,
-                    "content-type": "application/x-www-form-urlencoded",
-                    "authorization": auth,
+                    'Content-Length': data.length,
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'authorization': auth
                 },
                 path: '/identity/v1/oauth2/token',
                 hostname: this.baseUrl,
@@ -53,10 +53,10 @@ class EbayOauthToken {
                         reject(body);
                     }
                     resolve(body);
-                })
+                });
             });
 
-            request.on("error", (error) => {
+            request.on('error', (error) => {
                 reject(error);
             });
             request.end(data);
@@ -67,6 +67,6 @@ class EbayOauthToken {
 const base64Encode = (encodeData) => {
     const buff = new Buffer(encodeData);
     return buff.toString('base64');
-}
+};
 
 module.exports = EbayOauthToken;

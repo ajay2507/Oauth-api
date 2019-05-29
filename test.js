@@ -5,18 +5,18 @@ const nock = require('nock');
 const EbayAuthToken = require('./index');
 
 
-describe("test EbayAuthToken", () => {
-    it("EbayAuthToken is a function", () => {
+describe('test EbayAuthToken', () => {
+    it('EbayAuthToken is a function', () => {
         expect(EbayAuthToken).to.be.a('function');
     });
 
-    it("test without options", () => {
+    it('test without options', () => {
         expect(() => {
             new EbayAuthToken();
-        }).to.throw(Error, "Invalid options or input");
+        }).to.throw(Error, 'Invalid options or input');
     });
 
-    it("test with and without grant type", () => {
+    it('test with and without grant type', () => {
         let ebayAuthToken = new EbayAuthToken({
             clientId: 'ABC',
             clientSecret: 'XXX',
@@ -30,7 +30,7 @@ describe("test EbayAuthToken", () => {
         expect(ebayAuthToken.grantType).to.equal('client_credentials');
     });
 
-    it("test getAccessToken method", () => {
+    it('test getAccessToken method', () => {
         const ebayAuthToken = new EbayAuthToken({
             clientId: 'ABC',
             clientSecret: 'XXX',
@@ -40,8 +40,8 @@ describe("test EbayAuthToken", () => {
         const hostname = 'my.test.ebay.com';
         const mock = nock(`https://${hostname}`);
         const response = {
-            access_token: "QWESJAHS12323OP"
-        }
+            access_token: 'QWESJAHS12323OP'
+        };
         mock
             .post(pathname, { grant_type: 'client_credentials', scope: 'https://api.ebay.com/oauth/api_scope' })
             .reply(200, response);
