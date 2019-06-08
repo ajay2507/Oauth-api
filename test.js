@@ -49,5 +49,50 @@ describe('test EbayAuthToken', () => {
             expect(data.access_token).to.equal('QWESJAHS12323OP');
         });
     });
+
+    it('test getUserConsentUrl without redirect uri', () => {
+        const ebayAuthToken = new EbayAuthToken({
+            clientId: 'ABC',
+            clientSecret: 'XXX',
+            hostname: 'my.test.ebay.com'
+        });
+
+        expect(() => {
+            ebayAuthToken.getUserConsentUrl();
+        }).to.throw(Error, 'redirect_uri is required for redirection after sign in \n kindly check here https://developer.ebay.com/api-docs/static/oauth-redirect-uri.html');
+    });
+
+    it('test getUserConsentUrl without prompt', () => {
+        const ebayAuthToken = new EbayAuthToken({
+            clientId: 'ABC',
+            clientSecret: 'XXX',
+            hostname: 'my.test.ebay.com',
+            redirectUri: 'nodeuri'
+        });
+        expect(ebayAuthToken.getUserConsentUrl()).to.equal('https://auth.ebay.com/oauth2/authorize?client_id=ABC&redirect_uri=nodeuri&response_type=code&scope=https://api.ebay.com/oauth/api_scope&prompt=');
+    });
+
+    it('test getUserConsentUrl with prompt', () => {
+        const ebayAuthToken = new EbayAuthToken({
+            clientId: 'ABC',
+            clientSecret: 'XXX',
+            hostname: 'my.test.ebay.com',
+            redirectUri: 'nodeuri',
+            prompt: 'login'
+        });
+        expect(ebayAuthToken.getUserConsentUrl()).to.equal('https://auth.ebay.com/oauth2/authorize?client_id=ABC&redirect_uri=nodeuri&response_type=code&scope=https://api.ebay.com/oauth/api_scope&prompt=login');
+    });
+
+    it('test getUserConsentUrl with sandbox env', () => {
+        const ebayAuthToken = new EbayAuthToken({
+            clientId: 'ABC',
+            clientSecret: 'XXX',
+            hostname: 'my.test.ebay.com',
+            redirectUri: 'nodeuri',
+            prompt: 'login',
+            env: 'SANDBOX'
+        });
+        expect(ebayAuthToken.getUserConsentUrl()).to.equal('https://auth.sandbox.ebay.com/oauth2/authorize?client_id=ABC&redirect_uri=nodeuri&response_type=code&scope=https://api.ebay.com/oauth/api_scope&prompt=login');
+    });
 });
 
