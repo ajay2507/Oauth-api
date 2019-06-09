@@ -19,14 +19,15 @@
     "refresh token"
   ],
   "dependencies": {
+    "open": "^6.3.0",
     "querystring": "^0.2.0"
   },
   "eslintConfig": {
     "extends": "ajay"
   },
   "devDependencies": {
-    "eslint-config-ajay": "^1.0.1",
     "chai": "^4.2.0",
+    "eslint-config-ajay": "^1.0.1",
     "mocha": "^6.1.4",
     "nock": "^10.0.6"
   }

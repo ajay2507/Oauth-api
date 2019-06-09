@@ -81,6 +81,35 @@ class EbayOauthToken {
         queryParam = queryParam + '&prompt=' + this.prompt;
         return `${this.baseConsentUrl}?${queryParam}`;
     }
+
+    getUserAccessToken(code) {
+        if (!code) {
+            throw new Error("Authorization code is required");
+        }
+
+        return new Promise((resolve, reject) => {
+            const data = JSON.stringify({
+                client_secret: this.clientSecret,
+                client_id: this.clientId,
+                code
+            });
+
+            const request = https.request({
+                headers: {
+                    'Content-Length': Buffer.byteLength(data),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                path: '/admin/oauth/access_token',
+                hostname: shop,
+                method: 'POST'
+            });
+
+            request.on('response', (response) => {
+                console.log(response);
+            });
+        });
+    }
 }
 
 const base64Encode = (encodeData) => {
