@@ -1,8 +1,8 @@
 'use strict';
 
-const https = require('https');
-const consts = require('./constants');
 const queryString = require('querystring');
+const consts = require('./constants');
+const postRequest = require('./request');
 const PROD_ENV = 'PROD';
 const SANDBOX_ENV = 'SANDBOX';
 
@@ -24,47 +24,18 @@ class EbayOauthToken {
             this.baseUrl = options.hostname;
         }
         this.redirectUri = options.redirectUri || '';
-        this.grantType = (!options.grantType) ? consts.DEFAULT_GRANT_TYPE : options.grantType;
+        this.grantType = (!options.grantType) ? consts.CLIENT_CRED_GRANT_TYPE : options.grantType;
         this.scope = (!options.scope) ? consts.DEFAULT_SCOPE : options.scope;
         this.prompt = options.prompt || '';
     }
 
-    getAccessToken() {
-        const encodedStr = base64Encode(this.clientId + ':' + this.clientSecret);
-        const auth = 'Basic ' + encodedStr;
+    getClientCredentailsToken() {
+        this.grantType = consts.CLIENT_CRED_GRANT_TYPE;
         const data = queryString.stringify({
             grant_type: this.grantType,
             scope: this.scope
         });
-        return new Promise((resolve, reject) => {
-            const request = https.request({
-                headers: {
-                    'Content-Length': data.length,
-                    'content-type': 'application/x-www-form-urlencoded',
-                    'authorization': auth
-                },
-                path: '/identity/v1/oauth2/token',
-                hostname: this.baseUrl,
-                method: 'POST'
-            });
-            request.on('response', response => {
-                let body = '';
-                response.setEncoding('utf8');
-                response.on('data', (chunk) => body += chunk);
-                response.on('end', () => {
-                    body = JSON.parse(body);
-                    if (body.error) {
-                        reject(body);
-                    }
-                    resolve(body);
-                });
-            });
-
-            request.on('error', (error) => {
-                reject(error);
-            });
-            request.end(data);
-        });
+        return postRequest(data, this);
     }
 
     getUserConsentUrl() {
@@ -81,11 +52,14 @@ class EbayOauthToken {
         queryParam = queryParam + '&prompt=' + this.prompt;
         return `${this.baseConsentUrl}?${queryParam}`;
     }
-}
 
-const base64Encode = (encodeData) => {
-    const buff = new Buffer(encodeData);
-    return buff.toString('base64');
+    getAuthorizationCodeToken(code) {
+        if (!code) {
+            throw new Error('Authorization code is required');
+        }
+        const data = `code=${code}&grant_type=${consts.AUTH_CODE_GRANT_TYPE}&redirect_uri=${this.redirectUri}`;
+        return postRequest(data, this);
+    };
 };
 
 module.exports = EbayOauthToken;
