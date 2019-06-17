@@ -24,7 +24,7 @@ class EbayOauthToken {
             this.baseUrl = options.hostname;
         }
         this.redirectUri = options.redirectUri || '';
-        this.grantType = (!options.grantType) ? consts.DEFAULT_GRANT_TYPE : options.grantType;
+        this.grantType = (!options.grantType) ? consts.CLIENT_CRED_GRANT_TYPE : options.grantType;
         this.scope = (!options.scope) ? consts.DEFAULT_SCOPE : options.scope;
         this.prompt = options.prompt || '';
     }
