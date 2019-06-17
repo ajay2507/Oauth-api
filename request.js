@@ -2,6 +2,8 @@
 const https = require('https');
 
 const postRequest = (data, ebayAuthToken) => {
+    const encodedStr = base64Encode(ebayAuthToken.clientId + ':' + ebayAuthToken.clientSecret);
+    const auth = 'Basic ' + encodedStr;
     return new Promise((resolve, reject) => {
         const request = https.request({
             headers: {
@@ -18,7 +20,6 @@ const postRequest = (data, ebayAuthToken) => {
             response.setEncoding('utf8');
             response.on('data', (chunk) => body += chunk);
             response.on('end', () => {
-                console.log(response.headers);
                 body = JSON.parse(body);
                 if (body.error) {
                     reject(body);
@@ -32,6 +33,11 @@ const postRequest = (data, ebayAuthToken) => {
         });
         request.end(data);
     });
+};
+
+const base64Encode = (encodeData) => {
+    const buff = new Buffer(encodeData);
+    return buff.toString('base64');
 };
 
 module.exports = postRequest;

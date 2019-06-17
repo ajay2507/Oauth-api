@@ -1,5 +1,4 @@
 const EbayAuthToken = require('./index');
-const open = require('open');
 
 const scopes = ["https://api.ebay.com/oauth/api_scope",
     "https://api.ebay.com/oauth/api_scope/sell.marketing.readonly",
@@ -12,26 +11,29 @@ const scopes = ["https://api.ebay.com/oauth/api_scope",
     "https://api.ebay.com/oauth/api_scope/sell.fulfillment"
 ]
 const ebayAuthToken = new EbayAuthToken({
-    clientId: "Ajaykuma-nodeapi-PRD-bf1a91299-ed4deb45", // required
-    clientSecret: "PRD-f1a91299c206-f184-45e0-b068-f139", // required
-    grantType: "-- Grant type --", // optional
+    clientId: " -- Client ID -- ", // required
+    clientSecret: " -- Client Secret ---", // required
     scope: scopes,
-    redirectUri: "Ajaykumar_Prath-Ajaykuma-nodeap-rcndhr" // required for getting user consent url.
+    redirectUri: "-- redirect uri -- " // required for getting user consent url (Authorization Code Auth Flow).
 });
 
-// ebayAuthToken.getAccessToken().then((data) => {
-//     console.log(data);
-// }).catch((error) => {
-//     console.log(`Error to get Access token :${JSON.stringify(error)}`);
-// });
+
+var code = 'v%5E1.1%23i%5E1%23f%5E0%23r%5E1%23I%5E3%23p%5E3%23t%5EUl41XzA6OUQ0REI1OEQ5RjZBODA3NkU2QTIxQkZCODI0OUQ3RDFfMV8xI0VeMjYw'
+
+// Client Crendential Auth Flow
+ebayAuthToken.getClientCredentailsToken().then((data) => {
+    console.log(data);
+}).catch((error) => {
+    console.log(`Error to get Access token :${JSON.stringify(error)}`);
+});
+
+// Authorization Code Auth Flow
+ebayAuthToken.getUserConsentUrl(); // get user consent url.
 
 
-const consentUrl = ebayAuthToken.getUserConsentUrl(); // get user consent url.
-
-
-(async () => {
-    console.log(consentUrl);
-    const response = await open(consentUrl, { wait: true });
-    console.log(response);
-})();
-//https://auth.ebay.com/oauth2/authorize?client_id=Ajaykuma-nodeapi-PRD-bf1a91299-ed4deb45&redirect_uri=Ajaykumar_Prath-Ajaykuma-nodeap-uoqxr&response_type=code&scope=https://api.ebay.com/oauth/api_scope%20https://api.ebay.com/oauth/api_scope/sell.marketing.readonly%20https://api.ebay.com/oauth/api_scope/sell.marketing%20https://api.ebay.com/oauth/api_scope/sell.inventory.readonly%20https://api.ebay.com/oauth/api_scope/sell.inventory%20https://api.ebay.com/oauth/api_scope/sell.account.readonly%20https://api.ebay.com/oauth/api_scope/sell.account%20https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly%20https://api.ebay.com/oauth/api_scope/sell.fulfillment&prompt=
+ebayAuthToken.getAuthorizationCodeToken('v%5E1.1%23i%5E1%23r%5E1%23I%5E3%23f%5E0%23p%5E3%23t%5EUl41Xzg6Qjk1MzVGRUEwRUI4MzUzQTgyQTBBMEYwNDQ4MDJENzRfMV8xI0VeMjYw').then((data) => {
+    console.log(data);
+}).catch((error) => {
+    console.log(error);
+    console.log(`Error to get Access token :${JSON.stringify(error)}`);
+});
