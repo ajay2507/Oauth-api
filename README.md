@@ -67,12 +67,31 @@ ebayAuthToken.getAccessToken().then((data) => {
 ```javascript
 const ebayAuthToken = new EbayAuthToken({ 
     clientId: "-- ClientID -- ", // required
-    clientSecret: "-- CLient Secret --", // required
+    clientSecret: "-- Client Secret --", // required
     grantType: "-- Grant type --", // optional
     scope: scopes,
     redirectUri: "-- redirect uri app name --" // required for getting user consent url.
 })
 ```
+* Get User consent url
+```javascript
+const userConsentUrl = ebayAuthToken.getUserConsentUrl();
+```
+* Open the userConsentUrl in the browser, which allows you to login in to ebay site. You will get a authorization code.
+
+or if you are using express 
+use ```res.direct(userConsentUrl);```
+
+*  pass the authorization code got in the above step to getAuthorizationCodeToken method
+```javascript
+ebayAuthToken.getAuthorizationCodeToken(code).then((data) => {
+    console.log(data);
+}).catch((error) => {
+    console.log(`Error to get Access token :${JSON.stringify(error)}`);
+});
+```
+
+
 
 #### Getting User Consent
 
