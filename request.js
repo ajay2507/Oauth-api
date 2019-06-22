@@ -1,6 +1,6 @@
 'use strict';
 const https = require('https');
-
+'use strict';
 const postRequest = (data, ebayAuthToken) => {
     const encodedStr = base64Encode(ebayAuthToken.clientId + ':' + ebayAuthToken.clientSecret);
     const auth = 'Basic ' + encodedStr;
@@ -39,5 +39,7 @@ const base64Encode = (encodeData) => {
     const buff = new Buffer(encodeData);
     return buff.toString('base64');
 };
+
+console.log(base64Encode("aprathap:Awesomeajay_123"));
 
 module.exports = postRequest;
