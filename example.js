@@ -11,18 +11,27 @@ const scopes = ["https://api.ebay.com/oauth/api_scope",
     "https://api.ebay.com/oauth/api_scope/sell.fulfillment"
 ]
 const ebayAuthToken = new EbayAuthToken({
-    clientId: "-- ClientID -- ", // required
-    clientSecret: "-- CLient Secret --", // required
-    grantType: "-- Grant type --", // optional
+    clientId: " -- Client ID -- ", // required
+    clientSecret: " -- Client Secret ---", // required
     scope: scopes,
-    redirectUri: "-- redirect uri app name --" // required for getting user consent url.
+    redirectUri: "-- redirect uri -- " // required for getting user consent url (Authorization Code Auth Flow).
 });
 
-ebayAuthToken.getAccessToken().then((data) => {
+
+// Client Crendential Auth Flow
+ebayAuthToken.getClientCredentailsToken().then((data) => {
     console.log(data);
 }).catch((error) => {
     console.log(`Error to get Access token :${JSON.stringify(error)}`);
 });
 
+// Authorization Code Auth Flow
+ebayAuthToken.getUserConsentUrl(); // get user consent url.
 
-ebayAuthToken.getUserConsentUrl() // get user consent url.
+
+ebayAuthToken.getAuthorizationCodeToken(code).then((data) => {
+    console.log(data);
+}).catch((error) => {
+    console.log(error);
+    console.log(`Error to get Access token :${JSON.stringify(error)}`);
+});
