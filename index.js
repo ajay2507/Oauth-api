@@ -6,6 +6,7 @@ const postRequest = require('./request');
 const PROD_ENV = 'PROD';
 const SANDBOX_ENV = 'SANDBOX';
 
+
 class EbayOauthToken {
     constructor(options) {
         if (!options || !options.clientId || !options.clientSecret) {
@@ -27,6 +28,7 @@ class EbayOauthToken {
         this.grantType = (!options.grantType) ? consts.CLIENT_CRED_GRANT_TYPE : options.grantType;
         this.scope = (!options.scope) ? consts.DEFAULT_SCOPE : options.scope;
         this.prompt = options.prompt || '';
+        this.refreshToken = '';
     }
 
     getClientCredentailsToken() {
@@ -60,6 +62,23 @@ class EbayOauthToken {
         const data = `code=${code}&grant_type=${consts.AUTH_CODE_GRANT_TYPE}&redirect_uri=${this.redirectUri}`;
         return postRequest(data, this);
     };
+
+    getAccessTokenWithRefresh(refresh_token) {
+        let refreshToken = refresh_token || this.getRefreshToken();
+        if (!refreshToken) {
+            throw new Error("Refresh token is required, to generate refresh token use getAuthorizationCodeToken method");
+        }
+        const data = `refresh_token=${refreshToken}&grant_type=${consts.REFRESH_GRANT_TYPE}&scope=${this.scope}`;
+        return postRequest(data, this);
+    }
+
+    setRefreshToken(refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    getRefreshToken() {
+        return this.refreshToken;
+    }
 };
 
 module.exports = EbayOauthToken;
