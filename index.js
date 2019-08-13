@@ -24,9 +24,14 @@ class EbayOauthToken {
         if (options.hostname) {
             this.baseUrl = options.hostname;
         }
+        this.prompt = options.prompt || '';
+        this.refreshToken = '';
         this.redirectUri = options.redirectUri || '';
         this.grantType = (!options.grantType) ? consts.CLIENT_CRED_GRANT_TYPE : options.grantType;
-        this.scope = (!options.scope) ? consts.DEFAULT_SCOPE : options.scope;
+        if (!options.scope) {
+            this.scope = consts.DEFAULT_SCOPE;
+        }
+        this.scope = (Array.isArray(options.scope)) ? options.scope.join(' ') : options.scope;
         this.prompt = options.prompt || '';
         this.refreshToken = '';
     }
