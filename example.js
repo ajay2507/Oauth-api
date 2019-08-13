@@ -13,7 +13,8 @@ const scopes = ["https://api.ebay.com/oauth/api_scope",
 const ebayAuthToken = new EbayAuthToken({
     clientId: " -- Client ID -- ", // required
     clientSecret: " -- Client Secret ---", // required
-    scope: scopes,
+    env: "SANDBOX", // Enironment (default = PROD)
+    scope: scopes, // array is scopes []
     redirectUri: "-- redirect uri -- " // required for getting user consent url (Authorization Code Auth Flow).
 });
 

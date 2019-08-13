@@ -24,9 +24,12 @@ class EbayOauthToken {
         if (options.hostname) {
             this.baseUrl = options.hostname;
         }
+        this.prompt = options.prompt || '';
+        this.refreshToken = '';
         this.redirectUri = options.redirectUri || '';
         this.grantType = (!options.grantType) ? consts.CLIENT_CRED_GRANT_TYPE : options.grantType;
         this.scope = (!options.scope) ? consts.DEFAULT_SCOPE : options.scope;
+        this.scope = (Array.isArray(this.scope)) ? this.scope.join(' ') : this.scope;
         this.prompt = options.prompt || '';
         this.refreshToken = '';
     }
@@ -66,7 +69,7 @@ class EbayOauthToken {
     getAccessTokenWithRefresh(refresh_token) {
         let refreshToken = refresh_token || this.getRefreshToken();
         if (!refreshToken) {
-            throw new Error("Refresh token is required, to generate refresh token use getAuthorizationCodeToken method");
+            throw new Error('Refresh token is required, to generate refresh token use getAuthorizationCodeToken method');
         }
         const data = `refresh_token=${refreshToken}&grant_type=${consts.REFRESH_GRANT_TYPE}&scope=${this.scope}`;
         return postRequest(data, this);

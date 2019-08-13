@@ -32,7 +32,8 @@ const ebayAuthToken = new EbayAuthToken({
     clientId: "-- ClientID -- ", // required
     clientSecret: "-- Client Secret --", // required
     grantType: "-- Grant type --", // optional
-    scope: scopes, // array of scopes
+    scope: scopes, // array of scopes,
+    env: "PROD" // either SANDBOX or PROD (Default Value = PROD)
 })
 ```
 #### Example
