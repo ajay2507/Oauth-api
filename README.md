@@ -78,10 +78,14 @@ ebayAuthToken.getAuthorizationCodeToken(code).then((data) => {
 
 
 
-#### Getting User Consent
+#### Refresh token to update a User access token
 
 ```javascript
-ebayAuthToken.getUserConsentUrl()
+ebayAuthToken.getAccessTokenWithRefresh(refresh_token).then((data) => {
+    console.log(data);
+}).catch((error) => {
+    console.log(`Error to get Access token from refresh token:${JSON.stringify(error)}`);
+});
 ```
 
 ## Examples

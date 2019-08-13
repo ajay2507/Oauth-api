@@ -35,3 +35,10 @@ ebayAuthToken.getAuthorizationCodeToken(code).then((data) => {
     console.log(error);
     console.log(`Error to get Access token :${JSON.stringify(error)}`);
 });
+
+// Getting access token from refresh token obtained from Authorization Code flow
+ebayAuthToken.getAccessTokenWithRefresh().then((data) => {
+    console.log(data);
+}).catch((error) => {
+    console.log(`Error to get Access token from refresh token:${JSON.stringify(error)}`);
+});
