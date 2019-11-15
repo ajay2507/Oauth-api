@@ -5,6 +5,9 @@ Fetch Oauth token for Ebay developer REST Api's using node js.
 [![npm version](https://badge.fury.io/js/oauth-ebay.svg)](https://badge.fury.io/js/oauth-ebay)
 [![Build Status](https://travis-ci.org/pajaydev/oauth-ebay.svg?branch=master)](https://travis-ci.org/pajaydev/oauth-ebay)
 
+## [****NOT MAINTAINED*****] eBay officially published oauth module, kindly refer here https://github.com/eBay/ebay-oauth-nodejs-client]
+
+
 ## Installation
 
 ```shell
