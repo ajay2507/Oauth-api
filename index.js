@@ -29,7 +29,8 @@ class EbayOauthToken {
         this.redirectUri = options.redirectUri || '';
         this.grantType = (!options.grantType) ? consts.CLIENT_CRED_GRANT_TYPE : options.grantType;
         this.scope = (!options.scope) ? consts.DEFAULT_SCOPE : options.scope;
-        this.scope = (Array.isArray(this.scope)) ? this.scope.join(' ') : this.scope;
+        this.scope = (Array.isArray(this.scope)) ? this.scope.join('%20') : this.scope;
+        this.state = options.state;
         this.prompt = options.prompt || '';
         this.refreshToken = '';
     }
@@ -50,10 +51,8 @@ class EbayOauthToken {
         let queryParam = 'client_id=' + this.clientId;
         queryParam = queryParam + '&redirect_uri=' + this.redirectUri;
         queryParam = queryParam + '&response_type=code';
-        if (Array.isArray(this.scope)) {
-            this.scope = this.scope.join('%20');
-        }
         queryParam = queryParam + '&scope=' + this.scope;
+        queryParam = this.state ? queryParam + '&state=' + this.state : queryParam;
         queryParam = queryParam + '&prompt=' + this.prompt;
         return `${this.baseConsentUrl}?${queryParam}`;
     }
