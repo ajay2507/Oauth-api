@@ -1,6 +1,6 @@
 {
   "name": "oauth-ebay",
-  "version": "1.3.0",
+  "version": "1.3.2",
   "description": "Get oauth2 token for ebay developer application",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,10 @@
   },
   "author": "Ajaykumar Prathap",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pajaydev/oauth-ebay"
+  },
   "keywords": [
     "eBay",
     "Oauth2",
