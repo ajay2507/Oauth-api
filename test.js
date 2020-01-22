@@ -95,6 +95,19 @@ describe('test EbayAuthToken', () => {
         expect(ebayAuthToken.getUserConsentUrl()).to.equal('https://auth.sandbox.ebay.com/oauth2/authorize?client_id=ABC&redirect_uri=nodeuri&response_type=code&scope=https://api.ebay.com/oauth/api_scope&prompt=login');
     });
 
+    it('test getUserConsentUrl with state param', () => {
+        const ebayAuthToken = new EbayAuthToken({
+            clientId: 'ABC',
+            clientSecret: 'XXX',
+            hostname: 'my.test.ebay.com',
+            redirectUri: 'nodeuri',
+            prompt: 'login',
+            env: 'SANDBOX',
+            state: 'xyz'
+        });
+        expect(ebayAuthToken.getUserConsentUrl()).to.equal('https://auth.sandbox.ebay.com/oauth2/authorize?client_id=ABC&redirect_uri=nodeuri&response_type=code&scope=https://api.ebay.com/oauth/api_scope&state=xyz&prompt=login');
+    });
+
     it('test getAuthorizationCodeToken without code', () => {
         const ebayAuthToken = new EbayAuthToken({
             clientId: 'ABC',

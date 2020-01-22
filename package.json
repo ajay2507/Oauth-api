@@ -1,11 +1,11 @@
 {
   "name": "oauth-ebay",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Get oauth2 token for ebay developer application",
   "main": "index.js",
   "scripts": {
     "lint": "eslint index.js test.js request.js",
-    "test": "mocha"
+    "test": "mocha && yarn run lint"
   },
   "author": "Ajaykumar Prathap",
   "license": "ISC",

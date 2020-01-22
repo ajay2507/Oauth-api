@@ -15,6 +15,7 @@ const ebayAuthToken = new EbayAuthToken({
     clientSecret: " -- Client Secret ---", // required
     env: "SANDBOX", // Enironment (default = PROD)
     scope: scopes, // array is scopes []
+    state: 'xyz', // optional value 
     redirectUri: "-- redirect uri -- " // required for getting user consent url (Authorization Code Auth Flow).
 });
 

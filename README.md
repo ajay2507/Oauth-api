@@ -33,6 +33,7 @@ const ebayAuthToken = new EbayAuthToken({
     clientSecret: "-- Client Secret --", // required
     grantType: "-- Grant type --", // optional
     scope: scopes, // array of scopes,
+    state: '', // optional
     env: "PROD" // either SANDBOX or PROD (Default Value = PROD)
 })
 ```
@@ -109,4 +110,3 @@ Specifying right scopes
 ```shell
 https://developer.ebay.com/api-docs/static/oauth-scopes.html
 ```
-
